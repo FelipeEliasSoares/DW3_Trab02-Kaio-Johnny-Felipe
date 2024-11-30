@@ -24,7 +24,7 @@ const GetUsuarioByID = async (req, res) => {
     } else {
       res.status(404).json({
         status: "erro",
-        mensagem: "Usuario com esse ID não encontrada",
+        mensagem: "Usuário com esse ID não encontrado",
       });
     }
   } catch (error) {
