@@ -1,0 +1,40 @@
+### teste de login ###
+POST http://localhost:4000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "login": "admin",
+    "senha": "admin"
+}
+
+### todas os usuarios não deletados ###
+GET http://localhost:4000/usuarios HTTP/1.1
+content-type: application/json
+
+####teste de pegar usuario por ID ####
+get http://localhost:4000/usuarios/1e1430e2-2554-44a4-9016-02e049ed422d HTTP/1.1
+content-type: application/json
+
+####teste de inserção de usuario ####
+POST http://localhost:4000/InsertUsuario HTTP/1.1
+content-type: application/json
+
+{
+    "login": "admin",
+    "email": "adminEmail@teste.com",
+    "senha": "admin"
+}
+
+#### teste atualizar usuario ####
+POST http://localhost:4000/UpdateUsuario/1e1430e2-2554-44a4-9016-02e049ed422d HTTP/1.1
+content-type: application/json
+
+{
+    "login": "felipeMod2",
+    "email": "testeEmailModi@teste.com",
+    "senha": "senhaModi"
+}
+
+#### teste deletar usuario
+DELETE http://localhost:4000/DeleteUsuario/1e1430e2-2554-44a4-9016-02e049ed422d HTTP/1.1
+content-type: application/json
