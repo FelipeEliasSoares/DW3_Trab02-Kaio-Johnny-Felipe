@@ -19,7 +19,7 @@ const GetUsuarioByID = async (req, res) => {
   try {
     const usuarioId = req.params.id;
     const registro = await mdlUsuario.GetUsuarioByID(usuarioId);
-    if (registro) {
+    if (registro.length > 0) {
       res.json({ status: "ok", registro });
     } else {
       res.status(404).json({
