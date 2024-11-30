@@ -8,7 +8,7 @@ const GetAllUsuarios = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: "erro",
-      mensagem: "Erro ao obter todos os usuarios",
+      mensagem: "Erro ao obter todos os usuários",
       erro: error.message,
     });
   }
