@@ -2,9 +2,6 @@ const express = require("express");
 const routerApp = express.Router();
 
 const appLogin = require("../apps/login/controller/ctlLogin");
-const appContas = require("../apps/contas/controller/ctlContas");
-const appMotoristas = require("../apps/motoristas/controller/ctlMotoristas");
-
 const Me = require("../apps/middleware/auth");
 const appUsuarios = require("../apps/usuarios/controller/ctlUsuarios");
 
@@ -42,6 +39,5 @@ routerApp.get("/usuarios/:id", Me, appUsuarios.GetUsuarioByID);
 routerApp.post("/usuarios", Me, appUsuarios.InsertUsuario);
 routerApp.put("/usuarios/:id", Me, appUsuarios.UpdateUsuario);
 routerApp.delete("/usuarios/:id", Me, appUsuarios.DeleteUsuario);
-
 
 module.exports = routerApp;
