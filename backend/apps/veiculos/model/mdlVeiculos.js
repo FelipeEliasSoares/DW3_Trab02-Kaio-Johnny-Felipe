@@ -1,66 +1,67 @@
 const db = require("../../../database/databaseconfig");
 
 // Função para obter todas as contas
-const GetAllUsuarios = async () => {
+const GetAllVeiculos= async () => {
   return (
     await db.query(
-      "SELECT * " + "FROM usuario where removido IS NOT TRUE ORDER BY id ASC"
+      "SELECT * " + "FROM veiculos where removido IS NOT TRUE ORDER BY id ASC"
     )
   ).rows;
 };
 
 // Função para obter uma conta por ID no BD
-const GetUsuarioByID = async (usuarioIDPar) => {
+const GetVeiculosByID = async (veiculosIDPar) => {
   return (
-    await db.query("SELECT * FROM usuario WHERE id = $1 ", [usuarioIDPar])
+    await db.query("SELECT * FROM veiculos WHERE id = $1 ", [veiculosIDPar])
   ).rows;
 };
 
-// Função para inserir uma nova conta no BD utilizando bcrypt no ato
-const InsertUsuario = async (registroPar) => {
+// Função para inserir uma nova // no BD utilizando
+const InsertVeiculo = async (registroPar) => {
   let linhasAfetadas;
   let msg = "ok";
-
   try {
     linhasAfetadas = (
       await db.query(
-        "INSERT INTO usuario " +
-          "(email, login, senha) " +
-          "VALUES ($1, $2, crypt($3, gen_salt('bf'))) " +
-          "ON CONFLICT DO NOTHING",
-        [registroPar.email, registroPar.login, registroPar.senha]
+        "INSERT INTO veiculos " +
+          "(placa, modelo, DataAquisicao) " +
+          "VALUES ($1, $2, $3)",
+        [
+          registroPar.placa,
+          registroPar.modelo,
+          registroPar.DataAquisicao,
+        ]
       )
     ).rowCount;
   } catch (error) {
-    msg = "[mdlUsuario|InsertUsuario] " + error.detail;
+    msg = "[mdlVeiculos|InsertVeiculos] " + error.detail;
     linhasAfetadas = -1;
   }
 
   return { msg, linhasAfetadas };
 };
-
 // Função para atualizar uma conta existente no BD
-const UpdateUsuario = async (registroPar) => {
+const UpdateVeiculo = async (registroPar) => {
   let linhasAfetadas;
   let msg = "ok";
   try {
     linhasAfetadas = (
       await db.query(
-        "UPDATE usuario SET " +
-          "login = $2, " +
-          "email = $3, " +
-          "senha = crypt($4, gen_salt('bf')) " +
+        "UPDATE veiculos SET " +
+          "placa = $2, " +
+          "modelo = $3, " +
+          "DataAquisicao = $4, " +
           "WHERE id = $1",
         [
           registroPar.id,
-          registroPar.email,
-          registroPar.login,
-          registroPar.senha,
+          registroPar.placa,
+          registroPar.modelo,
+          registroPar.DataAquisicao,
         ]
       )
     ).rowCount;
   } catch (error) {
-    msg = "[mdlUsuario|UpdateUsuario] " + error.detail;
+    msg = "[mdlVeiculos|UpdateVeiculo] " + error.detail;
     linhasAfetadas = -1;
   }
 
@@ -68,19 +69,19 @@ const UpdateUsuario = async (registroPar) => {
 };
 
 // Função para marcar uma conta como excluída (soft delete) no BD
-const DeleteUsuario = async (registroPar) => {
+const DeleteVeiculo = async (registroPar) => {
   let linhasAfetadas;
   let msg = "ok";
 
   try {
     // Atualiza o campo `removido` para TRUE
     linhasAfetadas = (
-      await db.query("UPDATE usuario SET removido = TRUE WHERE id = $1", [
+      await db.query("UPDATE veiculos SET removido = TRUE WHERE id = $1", [
         registroPar.id,
       ])
     ).rowCount;
   } catch (error) {
-    msg = "[mdlUsuario|DeleteUsuario] " + error.message;
+    msg = "[mdlVeiculos|DeleteVeiculo] " + error.message;
     linhasAfetadas = -1;
   }
 
@@ -88,9 +89,9 @@ const DeleteUsuario = async (registroPar) => {
 };
 
 module.exports = {
-  GetAllUsuarios,
-  GetUsuarioByID,
-  InsertUsuario,
-  UpdateUsuario,
-  DeleteUsuario,
+  GetAllVeiculos,
+  GetVeiculosByID,
+  InsertVeiculo,
+  UpdateVeiculo,
+  DeleteVeiculo,
 };
