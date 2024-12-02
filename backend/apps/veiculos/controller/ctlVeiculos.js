@@ -8,7 +8,7 @@ const GetAllVeiculos = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       status: "erro",
-      mensagem: "erro ao obter todos os veiculos",
+      mensagem: "Erro ao obter todos os usuários",
       erro: error.message,
     });
   }
