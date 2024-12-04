@@ -2,6 +2,7 @@ const express = require("express");
 const routerApp = express.Router();
 
 const appLogin = require("../apps/login/controller/ctlLogin");
+const appContas = require("../apps/contas/controller/ctlContas");
 const Me = require("../apps/middleware/auth");
 const appUsuarios = require("../apps/usuarios/controller/ctlUsuarios");
 const appVeiculos = require("../apps/veiculos/controller/ctlVeiculos");
@@ -34,6 +35,13 @@ routerApp.get("/clientes/:id", Me, appClientes.GetClientesByID);
 routerApp.post("/clientes", Me, appClientes.InsertCliente);
 routerApp.put("/clientes/:id", Me, appClientes.UpdateCliente);
 routerApp.delete("/clientes/:id", Me, appClientes.DeleteCliente);
+
+// Rotas de Motoristas
+routerApp.get("/motoristas", Me, appMotoristas.GetAllMotoristas);
+routerApp.get("/motoristas/:id", Me, appMotoristas.GetMotoristaByID);
+routerApp.post("/motoristas", Me, appMotoristas.InsertMotorista);
+routerApp.put("/motoristas/:id", Me, appMotoristas.UpdateMotorista);
+routerApp.delete("/motoristas/:id", Me, appMotoristas.DeleteMotorista);
 
 // Rotas de Usuários
 routerApp.get("/usuarios", Me, appUsuarios.GetAllUsuarios);
