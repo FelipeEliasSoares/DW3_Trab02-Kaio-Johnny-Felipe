@@ -3,6 +3,8 @@ const routerApp = express.Router();
 
 const appLogin = require("../apps/login/controller/ctlLogin");
 const appContas = require("../apps/contas/controller/ctlContas");
+const appMotoristas = require("../apps/motoristas/controller/ctlMotoristas");
+
 const Me = require("../apps/middleware/auth");
 const appUsuarios = require("../apps/usuarios/controller/ctlUsuarios");
 
@@ -26,6 +28,13 @@ routerApp.get("/contas/:id", Me, appContas.GetContaByID);
 routerApp.post("/contas", Me, appContas.InsertConta);
 routerApp.put("/contas/:id", Me, appContas.UpdateConta);
 routerApp.delete("/contas/:id", Me, appContas.DeleteConta);
+
+// Rotas de Motoristas
+routerApp.get("/motoristas", Me, appMotoristas.GetAllMotoristas);
+routerApp.get("/motoristas/:id", Me, appMotoristas.GetMotoristaByID);
+routerApp.post("/motoristas", Me, appMotoristas.InsertMotorista);
+routerApp.put("/motoristas/:id", Me, appMotoristas.UpdateMotorista);
+routerApp.delete("/motoristas/:id", Me, appMotoristas.DeleteMotorista);
 
 // Rotas de Usuários
 routerApp.get("/usuarios", Me, appUsuarios.GetAllUsuarios);
