@@ -107,7 +107,7 @@ const Me = (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "Erro interno do servidor" });
   }
-
+  
   res.json({ user: req.user });
 };
 

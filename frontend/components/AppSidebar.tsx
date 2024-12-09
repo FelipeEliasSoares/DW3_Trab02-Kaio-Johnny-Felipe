@@ -21,21 +21,36 @@ export function AppSidebar() {
     <Sidebar className="w-64 h-screen shadow-md bg-white">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>ERP Modulo Financeiro</SidebarGroupLabel>
+          <SidebarGroupLabel>Transportadora KJF</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {/* Item único "Conta de Pagamento" */}
+              {/* Item único "Motoristas" */}
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link
-                    href="/dashboard/conta"
+                    href="/dashboard/motoristas"
                     className="flex items-center space-x-2"
                   >
                     <CreditCard />
-                    <span>Conta de Pagamento</span>
+                    <span>Motoristas</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+
+              {/* Item único "Veiculos" */}
+
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link
+                    href="/dashboard/veiculos"
+                    className="flex items-center space-x-2"
+                  >
+                    <CreditCard />
+                    <span>Veiculos</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

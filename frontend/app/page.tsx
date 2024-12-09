@@ -83,7 +83,7 @@ export default function Home() {
     try {
       await login(formData.email, formData.password);
       router.push("/dashboard"); // Redireciona após login bem-sucedido
-    } catch (err:any) {
+    } catch {
       setError("Credenciais inválidas. Por favor, tente novamente.");
     } finally {
       setIsLoading(false);
