@@ -50,7 +50,7 @@ const UpdateVeiculo = async (registroPar) => {
         "UPDATE veiculos SET " +
           "placa = $2, " +
           "modelo = $3, " +
-          "DataAquisicao = $4, " +
+          "DataAquisicao = $4 " +
           "WHERE id = $1",
         [
           registroPar.id,
