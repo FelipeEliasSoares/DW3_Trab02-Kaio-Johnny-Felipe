@@ -4,7 +4,7 @@ const db = require("../../../database/databaseconfig");
 const GetAllMotoristas = async () => {
     return (
       await db.query(
-        "SELECT * " + "FROM Motoristas ORDER BY descricao ASC"
+        "SELECT * " + "FROM Motoristas"
       )
     ).rows;
 };
@@ -26,7 +26,7 @@ const InsertMotorista = async (registroPar) => {
     try {
       linhasAfetadas = (
         await db.query(
-          "INSERT INTO conta " +
+          "INSERT INTO Motoristas " +
             "(nome, cpf, email, dataContratacao) " +
             "VALUES ($1, $2, $3, $4)",
           [
@@ -47,53 +47,59 @@ const InsertMotorista = async (registroPar) => {
 
 // Função para atualizar uma conta existente no BD
 const UpdateMotorista = async (registroPar) => {
-    let linhasAfetadas;
-    let msg = "ok";
-    try {
-      linhasAfetadas = (
-        await db.query(
-          "UPDATE conta SET " +
-            "nome = $2, " +
-            "cpf = $3, " +
-            "email = $4, " +
-            "dataContratacao = $5 " +
-            "WHERE id = $1"
+  let linhasAfetadas;
+  let msg = "ok";
+  try {
+      // A query precisa ser corrigida para usar corretamente os parâmetros
+      const result = await db.query(
+          "UPDATE Motoristas SET " +
+          "nome = $2, " +
+          "cpf = $3, " +
+          "email = $4, " +
+          "dataContratacao = $5 " +
+          "WHERE id = $1", 
           [
-            registroPar.id,
-            registroPar.nome,
-            registroPar.cpf,
-            registroPar.email,
-            registroPar.dataContratacao
+              registroPar.id,
+              registroPar.nome,
+              registroPar.cpf,
+              registroPar.email,
+              registroPar.dataContratacao
           ]
-        )
-      ).rowCount;
-    } catch (error) {
+      );
+      
+      // Verificando quantas linhas foram afetadas pela query
+      linhasAfetadas = result.rowCount;
+  } catch (error) {
       msg = "[mdlMotoristas|UpdateMotorista] " + error.detail;
       linhasAfetadas = -1;
-    }
-  
-    return { msg, linhasAfetadas };
-  };
+  }
+
+  return { msg, linhasAfetadas };
+};
 
 // Função para marcar uma conta como excluída (soft delete) no BD
 const DeleteMotorista = async (registroPar) => {
-    let linhasAfetadas;
-    let msg = "ok";
-  
-    try {
-      linhasAfetadas = (
-        await db.query(
-          "UPDATE Motoristas SET softDelete = TRUE WHERE id = $1",
+  let linhasAfetadas;
+  let msg = "ok";
+
+  try {
+      
+      const result = await db.query(
+          "UPDATE Motoristas SET softDelete = TRUE WHERE id = $1", 
           [registroPar.id]
-        )
-      ).rowCount;
-    } catch (error) {
-      msg = "[mdlMostoristas|DeleteMotorista] " + error.detail;
+      );
+      
+      
+      linhasAfetadas = result.rowCount;
+  } catch (error) {
+     
+      msg = "[mdlMotoristas|DeleteMotorista] " + error.detail;
       linhasAfetadas = -1;
-    }
+  }
+
   
-    return { msg, linhasAfetadas };
-  };
+  return { msg, linhasAfetadas };
+};
 
 
 module.exports = {
