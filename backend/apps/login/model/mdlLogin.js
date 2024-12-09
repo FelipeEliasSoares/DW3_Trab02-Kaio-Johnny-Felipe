@@ -2,7 +2,7 @@ const db = require("../../../database/databaseconfig");
 
 const GetCredencial = async (loginPar) => {
   return (
-    await db.query("SELECT id, login, senha FROM usuario WHERE login = $1", [
+    await db.query("SELECT id, login, senha, dataCriacao FROM Login WHERE login = $1", [
       loginPar,
     ])
   ).rows;
@@ -10,7 +10,7 @@ const GetCredencial = async (loginPar) => {
 
 // Método para buscar o usuário completo pelo ID
 const GetUsuarioById = async (id) => {
-  const query = "SELECT * FROM usuario WHERE id = $1";
+  const query = "SELECT * FROM Login WHERE id = $1";
   const values = [id];
 
   try {
