@@ -1,0 +1,40 @@
+### teste de login ###
+POST http://localhost:4000/login HTTP/1.1
+content-type: application/json
+
+{
+    "login": "admin",
+    "senha": "admin"
+}
+
+### todas os usuarios não deletados ###
+GET http://localhost:4000/clientes HTTP/1.1
+content-type: application/json
+
+####teste de pegar usuario por ID ####
+get http://localhost:4000/clientes/a8867de8-4b81-4b05-8487-b6c449614f26 HTTP/1.1
+content-type: application/json
+
+####teste de inserção de usuario ####
+POST http://localhost:4000/clientes HTTP/1.1
+content-type: application/json
+
+{
+    "email": "testeCliente",
+    "nome": "ClienteModelo",
+    "datacadastro": "0001/01/02"
+}
+
+#### teste atualizar usuario ####
+PUT http://localhost:4000/clientes/a8867de8-4b81-4b05-8487-b6c449614f26 HTTP/1.1
+content-type: application/json
+
+{
+    "email": "testeClienteMod2",
+    "nome": "testeClienteMod",
+    "datacadastro": "01/01/0002"
+}
+
+#### teste deletar usuario
+DELETE http://localhost:4000/clientes/a8867de8-4b81-4b05-8487-b6c449614f26 HTTP/1.1
+content-type: application/json

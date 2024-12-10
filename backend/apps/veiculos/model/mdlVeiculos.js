@@ -1,6 +1,7 @@
 const db = require("../../../database/databaseconfig");
 
-// Função para obter todas as contas
+
+
 const GetAllVeiculos= async () => {
   return (
     await db.query(
@@ -10,6 +11,29 @@ const GetAllVeiculos= async () => {
 };
 
 // Função para obter uma conta por ID no BD
+const GetUsuarioByID = async (usuarioIDPar) => {
+  return (
+    await db.query("SELECT * FROM usuario WHERE id = $1 ", [usuarioIDPar])
+  ).rows;
+};
+
+// Função para inserir uma nova conta no BD utilizando bcrypt no ato
+const InsertUsuario = async (registroPar) => {
+  let linhasAfetadas;
+  let msg = "ok";
+
+  try {
+    linhasAfetadas = (
+      await db.query(
+        "INSERT INTO usuario " +
+          "(email, login, senha) " +
+          "VALUES ($1, $2, crypt($3, gen_salt('bf'))) " +
+          "ON CONFLICT DO NOTHING",
+        [registroPar.email, registroPar.login, registroPar.senha]
+      )
+    ).rowCount;
+  } catch (error) {
+    msg = "[mdlUsuario|InsertUsuario] " + error.detail;
 const GetVeiculosByID = async (veiculosIDPar) => {
   return (
     await db.query("SELECT * FROM veiculos WHERE id = $1 ", [veiculosIDPar])
@@ -40,13 +64,13 @@ const InsertVeiculo = async (registroPar) => {
 
   return { msg, linhasAfetadas };
 };
-// Função para atualizar uma conta existente no BD
+
+
 const UpdateVeiculo = async (registroPar) => {
   let linhasAfetadas;
   let msg = "ok";
   try {
     linhasAfetadas = (
-      await db.query(
         "UPDATE veiculos SET " +
           "placa = $2, " +
           "modelo = $3, " +
@@ -68,7 +92,6 @@ const UpdateVeiculo = async (registroPar) => {
   return { msg, linhasAfetadas };
 };
 
-// Função para marcar uma conta como excluída (soft delete) no BD
 const DeleteVeiculo = async (registroPar) => {
   let linhasAfetadas;
   let msg = "ok";
