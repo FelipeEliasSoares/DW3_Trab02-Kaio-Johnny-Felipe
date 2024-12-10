@@ -36,7 +36,7 @@ routerApp.post("/veiculos", Me, appVeiculos.InsertVeiculo);
 routerApp.put("/veiculos/:id", Me, appVeiculos.UpdateVeiculo);
 routerApp.delete("/veiculos/:id", Me, appVeiculos.DeleteVeiculo);
 
-// Rotas de Usuários
+// Rotas de Clientes
 routerApp.get("/clientes", Me, appClientes.GetAllClientes);
 routerApp.get("/clientes/:id", Me, appClientes.GetClientesByID);
 routerApp.post("/clientes", Me, appClientes.InsertClientes);
