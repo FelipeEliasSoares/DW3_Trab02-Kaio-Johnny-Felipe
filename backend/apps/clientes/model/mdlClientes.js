@@ -84,7 +84,7 @@ const DeleteCliente = async (registroPar) => {
 
   try {
     // Atualiza o campo `removido` para TRUE
-    result = ( await db.query(
+    linhasAfetadas = ( await db.query(
       "UPDATE clientes SET removido = TRUE WHERE id = $1", [
         [registroPar.id],
       ])
