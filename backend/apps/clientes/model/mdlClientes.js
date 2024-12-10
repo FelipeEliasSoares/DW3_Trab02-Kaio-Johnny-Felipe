@@ -16,7 +16,7 @@ const GetClientesByID = async (clientesIDPar) => {
   ).rows;
 };
 
-// Função para inserir uma nova // no BD utilizando
+// Função para inserir um novo cliente no BD
 const InsertCliente = async (registroPar) => {
   let linhasAfetadas;
   let msg = "ok";
