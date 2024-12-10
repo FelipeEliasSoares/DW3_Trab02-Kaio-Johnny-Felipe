@@ -58,6 +58,7 @@ const UpdateVeiculo= async (req, res) => {
     const id = req.params.id;
     const registro = req.body;
     registro.id = id;
+    console.log(id);
     // Chama o modelo para atualizar o usuário
     const { msg, linhasAfetadas } = await mdlVeiculos.UpdateVeiculo(registro);
     if (linhasAfetadas > 0) {
