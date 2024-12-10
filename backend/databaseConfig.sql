@@ -1,5 +1,14 @@
--- Habilitar a extensão pgcrypto
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
+-- Criação das tabelas do banco de dados
+
+-- Tabela Motoristas
+CREATE TABLE Motoristas (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    nome VARCHAR(255) NOT NULL,
+    cpf CHAR(11) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL,
+    dataContratacao DATE NOT NULL,
+    softDelete BOOLEAN DEFAULT FALSE
+);
 
 -- Criação da tabela usuario com UUID
 CREATE TABLE usuario (
@@ -40,7 +49,8 @@ CREATE TABLE Login (
     softDelete BOOLEAN DEFAULT FALSE
 );
 
--- Inserção de dados na tabela usuario com senha criptografada
-INSERT INTO usuario (email, login, senha)
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+INSERT INTO Login (login, senha, dataCriacao, softDelete)
 VALUES 
     ('admin', crypt('admin', gen_salt('bf')), CURRENT_DATE, TRUE);
