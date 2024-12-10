@@ -86,7 +86,7 @@ const DeleteCliente = async (registroPar) => {
     // Atualiza o campo `removido` para TRUE
     linhasAfetadas = ( await db.query(
       "UPDATE clientes SET removido = TRUE WHERE id = $1", [
-        [registroPar.id],
+        registroPar.id,
       ])
     ).rowCount;
   } catch (error) {
