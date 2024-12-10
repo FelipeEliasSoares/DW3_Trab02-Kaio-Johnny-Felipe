@@ -1,6 +1,6 @@
 const db = require("../../../database/databaseconfig");
 
-// Função para obter todas as contas
+// Função para obter todos os veículos
 const GetAllVeiculos= async () => {
   return (
     await db.query(
