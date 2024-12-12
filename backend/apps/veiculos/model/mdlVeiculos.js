@@ -1,39 +1,15 @@
 const db = require("../../../database/databaseconfig");
 
-
-
+// Função para obter todas as contas
 const GetAllVeiculos= async () => {
   return (
     await db.query(
-      "SELECT * " + "FROM veiculos where softDelete IS NOT TRUE ORDER BY id ASC"
+      "SELECT * " + "FROM veiculos where removido IS NOT TRUE ORDER BY id ASC"
     )
   ).rows;
 };
 
 // Função para obter uma conta por ID no BD
-const GetUsuarioByID = async (usuarioIDPar) => {
-  return (
-    await db.query("SELECT * FROM usuario WHERE id = $1 ", [usuarioIDPar])
-  ).rows;
-};
-
-// Função para inserir uma nova conta no BD utilizando bcrypt no ato
-const InsertUsuario = async (registroPar) => {
-  let linhasAfetadas;
-  let msg = "ok";
-
-  try {
-    linhasAfetadas = (
-      await db.query(
-        "INSERT INTO usuario " +
-          "(email, login, senha) " +
-          "VALUES ($1, $2, crypt($3, gen_salt('bf'))) " +
-          "ON CONFLICT DO NOTHING",
-        [registroPar.email, registroPar.login, registroPar.senha]
-      )
-    ).rowCount;
-  } catch (error) {
-    msg = "[mdlUsuario|InsertUsuario] " + error.detail;
 const GetVeiculosByID = async (veiculosIDPar) => {
   return (
     await db.query("SELECT * FROM veiculos WHERE id = $1 ", [veiculosIDPar])
@@ -64,14 +40,13 @@ const InsertVeiculo = async (registroPar) => {
 
   return { msg, linhasAfetadas };
 };
-
-
+// Função para atualizar uma conta existente no BD
 const UpdateVeiculo = async (registroPar) => {
-  console.log(registroPar);
   let linhasAfetadas;
   let msg = "ok";
   try {
     linhasAfetadas = (
+      await db.query(
         "UPDATE veiculos SET " +
           "placa = $2, " +
           "modelo = $3, " +
@@ -93,14 +68,15 @@ const UpdateVeiculo = async (registroPar) => {
   return { msg, linhasAfetadas };
 };
 
+// Função para marcar uma conta como excluída (soft delete) no BD
 const DeleteVeiculo = async (registroPar) => {
   let linhasAfetadas;
   let msg = "ok";
 
   try {
-    // Atualiza o campo `softDelete` para TRUE
+    // Atualiza o campo `removido` para TRUE
     linhasAfetadas = (
-      await db.query("UPDATE veiculos SET softDelete = TRUE WHERE id = $1", [
+      await db.query("UPDATE veiculos SET removido = TRUE WHERE id = $1", [
         registroPar.id,
       ])
     ).rowCount;
