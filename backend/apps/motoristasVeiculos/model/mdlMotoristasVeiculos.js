@@ -8,7 +8,7 @@ const GetAllMotoristasVeiculos = async (filtro = {}) => {
         FROM MotoristasVeiculos mv
         INNER JOIN Motoristas m ON mv.motoristaID = m.id
         INNER JOIN Veiculos v ON mv.veiculoID = v.id
-        WHERE mv.softDelete = FALSE
+        WHERE mv.removido = FALSE
     `;
 
     const queryParams = [];
