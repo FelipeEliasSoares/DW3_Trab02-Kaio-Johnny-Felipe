@@ -6,6 +6,7 @@ const Me = require("../apps/middleware/auth");
 const appUsuarios = require("../apps/usuarios/controller/ctlUsuarios");
 const appVeiculos = require("../apps/veiculos/controller/ctlVeiculos");
 const appClientes = require("../apps/clientes/controller/ctlClientes");
+const appEntregas = require("../apps/entregas/controller/ctlEntregas");
 
 routerApp.use((req, res, next) => {
   next();
@@ -34,6 +35,13 @@ routerApp.get("/clientes/:id", Me, appClientes.GetClientesByID);
 routerApp.post("/clientes", Me, appClientes.InsertCliente);
 routerApp.put("/clientes/:id", Me, appClientes.UpdateCliente);
 routerApp.delete("/clientes/:id", Me, appClientes.DeleteCliente);
+
+// Rotas Entregas
+routerApp.get("/entregas", Me, appEntregas.GetAllEntregas);
+routerApp.get("/entregas/:id", Me, appEntregas.GetEntregaByID);
+routerApp.post("/entregas", Me, appEntregas.InsertEntrega);
+routerApp.put("/entregas/:id", Me, appEntregas.UpdateEntrega);
+routerApp.delete("/entregas/:id", Me, appEntregas.DeleteEntrega);
 
 // Rotas de Usuários
 routerApp.get("/usuarios", Me, appUsuarios.GetAllUsuarios);

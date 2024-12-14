@@ -1,0 +1,53 @@
+### teste de login ### 
+
+POST http://localhost:4000/login HTTP/1.1
+content-type: application/json
+
+{
+    "login": "admin",
+    "senha": "admin"
+}
+
+### teste de buscar todas os motoristasVeiculos 
+
+GET http://localhost:4000/entregas HTTP/1.1
+content-type: application/json
+
+### teste de buscar motoristaVeiculo por ID 
+GET http://localhost:4000/entregas/e249f9e6-c408-403a-b5c5-c0896e49482b HTTP/1.1
+content-type: application/json
+
+
+### teste de inserção de motoristaVeiculo ### 
+POST http://localhost:4000/entregas HTTP/1.1
+content-type: application/json
+
+{
+    "descricao": "descricaoTestVeicu",
+    "dataInicio": "2024-01-01",
+    "dataEntrega": "2024-01-01",
+    "motorisVeiculoId": "5518450b-5f21-43fb-9964-11efe667ed2c", 
+    "clienteID": "0bc9bad0-0edd-41a0-a690-0b0ffbc4b661"
+}
+
+### teste de atualização de motoristaVeiculo 
+
+PUT http://localhost:4000/entregas/e249f9e6-c408-403a-b5c5-c0896e49482b HTTP/1.1
+Content-Type: application/json
+
+{
+    "descricao": "descricaoTestVeicuMod",
+    "dataInicio": "2024-01-02",
+    "dataEntrega": "2024-01-02",
+    "motorisVeiculoId": "5518450b-5f21-43fb-9964-11efe667ed2c", 
+    "clienteID": "0bc9bad0-0edd-41a0-a690-0b0ffbc4b661"
+
+}
+
+### teste de exclusão de motoristaVeiculo 
+DELETE http://localhost:4000/entregas/e249f9e6-c408-403a-b5c5-c0896e49482b HTTP/1.1
+content-type: application/json
+
+{
+
+}
