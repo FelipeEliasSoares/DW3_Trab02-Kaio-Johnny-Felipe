@@ -83,7 +83,7 @@ const DeleteMotoristaVeiculo = async (id) => {
     try {
         linhasAfetadas = (
             await db.query(
-                "UPDATE MotoristasVeiculos SET softDelete = TRUE WHERE id = $1",
+                "UPDATE MotoristasVeiculos SET removido = TRUE WHERE id = $1",
                 [id]
             )
         ).rowCount;
