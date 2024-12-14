@@ -37,7 +37,7 @@ const GetMotoristaVeiculoByID = async (id) => {
              FROM MotoristasVeiculos mv
              INNER JOIN Motoristas m ON mv.motoristaID = m.id
              INNER JOIN Veiculos v ON mv.veiculoID = v.id
-             WHERE mv.id = $1 AND mv.softDelete = FALSE`,
+             WHERE mv.id = $1 AND mv.removido = FALSE`
             [id]
         )
     ).rows[0];
