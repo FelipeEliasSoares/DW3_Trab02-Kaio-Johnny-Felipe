@@ -40,7 +40,7 @@ const UpdateMotoristaVeiculo = async (req, res) => {
         const { id } = req.params;
         const registro = { ...req.body, id };
         const { msg, linhasAfetadas } = await mdlMotoristasVeiculos.UpdateMotoristaVeiculo(registro);
-        res.json({ status: msg, linhasAfetadas });
+        res.json({ status: linhasAfetadas > 0 ? 'success' : 'failure', linhasAfetadas });
     } catch (error) {
         res.status(500).json({ status: "erro", mensagem: "Erro ao atualizar registro", erro: error.message });
     }
