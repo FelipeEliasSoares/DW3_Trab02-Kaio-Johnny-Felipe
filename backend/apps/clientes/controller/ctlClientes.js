@@ -3,8 +3,8 @@ const mdlClientes = require("../model/mdlClientes");
 // Função para obter todas as contas
 const GetAllClientes = async (req, res) => {
   try {
-    const registros = await mdlClientes.GetAllClientes();
-    res.json({ status: "ok", registros });
+    const clientes = await mdlClientes.GetAllClientes();
+    res.json({ status: "ok", clientes });
   } catch (error) {
     res.status(500).json({
       status: "erro",
@@ -18,9 +18,9 @@ const GetAllClientes = async (req, res) => {
 const GetClientesByID = async (req, res) => {
   try {
     const clienteId = req.params.id;
-    const registro = await mdlClientes.GetClientesByID(clienteId);
-    if (registro.length > 0) {
-      res.json({ status: "ok", registro });
+    const clientes = await mdlClientes.GetClientesByID(clienteId);
+    if (clientes.length > 0) {
+      res.json({ status: "ok", clientes });
     } else {
       res.status(404).json({
         status: "erro",
@@ -39,8 +39,8 @@ const GetClientesByID = async (req, res) => {
 // Função para inserir uma nova conta
 const InsertCliente = async (req, res) => {
   try {
-    const registro = req.body;
-    const { msg, linhasAfetadas } = await mdlClientes.InsertCliente(registro);
+    const clientes = req.body;
+    const { msg, linhasAfetadas } = await mdlClientes.InsertCliente(clientes);
     res.json({ status: msg, linhasAfetadas });
   } catch (error) {
     res.status(500).json({
@@ -56,10 +56,10 @@ const UpdateCliente= async (req, res) => {
   try {
     // Captura o ID da URL e os dados do corpo
     const id = req.params.id;
-    const registro = req.body;
-    registro.id = id;
+    const clientes = req.body;
+    clientes.id = id;
     // Chama o modelo para atualizar o usuário
-    const { msg, linhasAfetadas } = await mdlClientes.UpdateCliente(registro);
+    const { msg, linhasAfetadas } = await mdlClientes.UpdateCliente(clientes);
     if (linhasAfetadas > 0) {
       res.status(200).json({
         status: msg,

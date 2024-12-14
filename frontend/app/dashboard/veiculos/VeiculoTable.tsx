@@ -14,12 +14,11 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Search, Eye, Edit, Trash, Plus } from "lucide-react";
-import { Motorista } from "../../../hooks/motoristas/types/types";
+import { Veiculos } from "../../../hooks/veiculos/types/types";
 import { Input } from "@/components/ui/input";
-import { formatCPF } from "@/lib/utils/formatCpf"; // Importa a função para formatar CPF
 
-interface MotoristaTableProps {
-  motoristas: Motorista[];
+interface VeiculosTableProps {
+  veiculos: Veiculos[];
   loading: boolean;
   error?: string | null;
   searchQuery: string;
@@ -32,8 +31,8 @@ interface MotoristaTableProps {
   setCurrentPage: (page: number) => void;
 }
 
-export const MotoristaTable: FC<MotoristaTableProps> = ({
-  motoristas,
+export const VeiculosTable: FC<VeiculosTableProps> = ({
+  veiculos,
   loading,
   error,
   searchQuery,
@@ -52,7 +51,7 @@ export const MotoristaTable: FC<MotoristaTableProps> = ({
         <div className="relative flex-1 max-w-md">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
           <Input
-            placeholder="Pesquisar por nome..."
+            placeholder="Pesquisar por placa ou modelo..."
             value={searchQuery}
             onChange={(e) => onSearch(e.target.value)}
             className="pl-10"
@@ -60,7 +59,7 @@ export const MotoristaTable: FC<MotoristaTableProps> = ({
         </div>
         <Button onClick={onOpenDialog} className="flex items-center gap-2">
           <Plus className="w-4 h-4" />
-          Novo Motorista
+          Novo Veículo
         </Button>
       </div>
 
@@ -85,46 +84,42 @@ export const MotoristaTable: FC<MotoristaTableProps> = ({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Nome</TableHead>
-                  <TableHead>CPF</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Data Contratação</TableHead>
+                  <TableHead>Placa</TableHead>
+                  <TableHead>Modelo</TableHead>
+                  <TableHead>Data de Aquisição</TableHead>
                   <TableHead className="text-right">Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {motoristas.map((registro) => (
-                  <TableRow key={registro.id} className="hover:bg-gray-50">
+                {veiculos.map((veiculo) => (
+                  <TableRow key={veiculo.id} className="hover:bg-gray-50">
                     <TableCell className="font-medium">
-                      {registro.nome}
+                      {veiculo.placa}
                     </TableCell>
-                    <TableCell>{formatCPF(registro.cpf)}</TableCell> {/* Formata o CPF */}
-                    <TableCell>{registro.email}</TableCell>
+                    <TableCell>{veiculo.modelo}</TableCell>
                     <TableCell>
-                      {new Date(registro.datacontratacao).toLocaleDateString(
-                        "pt-BR"
-                      )}
+                      {veiculo.dataaquisicao instanceof Date
+                        ? veiculo.dataaquisicao.toLocaleDateString("pt-BR")
+                        : new Date(veiculo.dataaquisicao).toLocaleDateString(
+                            "pt-BR"
+                          )}
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
                         <Button variant="ghost" size="sm" asChild>
-                          <Link
-                            href={`/dashboard/motoristas/${registro.id}/view`}
-                          >
+                          <Link href={`/dashboard/veiculos/${veiculo.id}/view`}>
                             <Eye className="w-4 h-4" />
                           </Link>
                         </Button>
                         <Button variant="ghost" size="sm" asChild>
-                          <Link
-                            href={`/dashboard/motoristas/${registro.id}/edit`}
-                          >
+                          <Link href={`/dashboard/veiculos/${veiculo.id}/edit`}>
                             <Edit className="w-4 h-4" />
                           </Link>
                         </Button>
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => onDelete(registro.id)}
+                          onClick={() => onDelete(veiculo.id)}
                           disabled={deleting}
                         >
                           <Trash className="w-4 h-4" />

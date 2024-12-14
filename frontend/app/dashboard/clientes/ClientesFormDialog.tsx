@@ -11,21 +11,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
-  Motorista,
-  CreateMotoristaInput,
-} from "../../../hooks/motoristas/types/types";
-import { formatCPF } from "@/lib/utils/formatCpf"; // Importa a função de formatação
+  Clientes,
+  CreateClientesInput,
+} from "../../../hooks/clientes/types/types";
 
-interface MotoristaFormDialogProps {
+interface ClienteFormDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: CreateMotoristaInput) => void;
+  onSubmit: (data: CreateClientesInput) => void;
   loading: boolean;
-  formData: Partial<Motorista>;
-  setFormData: (data: Partial<Motorista>) => void;
+  formData: Partial<Omit<Clientes, "id">>;
+  setFormData: (data: Partial<Omit<Clientes, "id">>) => void;
 }
 
-export const MotoristaFormDialog: FC<MotoristaFormDialogProps> = ({
+export const ClienteFormDialog: FC<ClienteFormDialogProps> = ({
   isOpen,
   onClose,
   onSubmit,
@@ -43,22 +42,16 @@ export const MotoristaFormDialog: FC<MotoristaFormDialogProps> = ({
       newErrors.nome = "O nome é obrigatório.";
     }
 
-    if (!formData.cpf) {
-      newErrors.cpf = "O CPF é obrigatório.";
-    } else if (!/^\d{11}$/.test(formData.cpf.replace(/\D/g, ""))) {
-      newErrors.cpf = "O CPF deve ter exatamente 11 dígitos.";
-    }
-
-    if (!formData.email) {
+    if (!formData.email || formData.email.trim() === "") {
       newErrors.email = "O email é obrigatório.";
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)
     ) {
-      newErrors.email = "O email não é válido.";
+      newErrors.email = "O email é inválido.";
     }
 
-    if (!formData.datacontratacao) {
-      newErrors.dataontratacao = "A data de contratação é obrigatória.";
+    if (!formData.datacadastro) {
+      newErrors.datacadastro = "A data de cadastro é obrigatória.";
     }
 
     setErrors(newErrors);
@@ -70,17 +63,16 @@ export const MotoristaFormDialog: FC<MotoristaFormDialogProps> = ({
 
     onSubmit({
       nome: formData.nome!,
-      cpf: formData.cpf!.replace(/\D/g, ""), // Remove a máscara antes de enviar
       email: formData.email!,
-      dataContratacao: formData.datacontratacao!.toISOString().split("T")[0],
-    } as CreateMotoristaInput);
+      datacadastro: formData.datacadastro!,
+    });
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>Adicionar Novo Motorista</DialogTitle>
+          <DialogTitle>Adicionar Novo Cliente</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div>
@@ -93,21 +85,6 @@ export const MotoristaFormDialog: FC<MotoristaFormDialogProps> = ({
             />
             {errors.nome && (
               <p className="text-red-500 text-sm mt-1">{errors.nome}</p>
-            )}
-          </div>
-          <div>
-            <Input
-              placeholder="CPF"
-              value={formData.cpf || ""}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  cpf: formatCPF(e.target.value), // Aplica a função de formatação
-                })
-              }
-            />
-            {errors.cpf && (
-              <p className="text-red-500 text-sm mt-1">{errors.cpf}</p>
             )}
           </div>
           <div>
@@ -125,22 +102,16 @@ export const MotoristaFormDialog: FC<MotoristaFormDialogProps> = ({
           <div>
             <Input
               type="date"
-              value={
-                formData.datacontratacao
-                  ? formData.datacontratacao.toISOString().split("T")[0]
-                  : ""
-              }
+              value={formData.datacadastro || ""}
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  datacontratacao: new Date(e.target.value),
+                  datacadastro: e.target.value,
                 })
               }
             />
-            {errors.dataontratacao && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.dataontratacao}
-              </p>
+            {errors.datacadastro && (
+              <p className="text-red-500 text-sm mt-1">{errors.datacadastro}</p>
             )}
           </div>
         </div>

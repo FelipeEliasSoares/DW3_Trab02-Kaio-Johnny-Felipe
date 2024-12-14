@@ -3,13 +3,13 @@ export type Motorista = {
     nome: string;
     cpf: string;
     email: string;
-    dataContratacao: string;
+    datacontratacao: Date;
 };
 
 // Define the type for the API response when getting all Motoristas
 export type GetAllMotoristasResponse = {
     status: string;
-    motorista: Motorista[];
+    motoristas: Motorista[];
 }
 
 // Define the type for the API response when getting a Motorista by ID
@@ -44,9 +44,5 @@ export type CreateMotoristaInput = {
 };
 
 export type UpdateMotoristaInput = {
-    id: string;
     nome?: string;
-    cpf?: string;
-    email?: string;
-    dataContratacao?: string;
 };

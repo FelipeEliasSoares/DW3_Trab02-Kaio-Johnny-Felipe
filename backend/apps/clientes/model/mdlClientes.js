@@ -4,7 +4,7 @@ const db = require("../../../database/databaseconfig");
 const GetAllClientes= async () => {
   return (
     await db.query(
-      "SELECT * " + "FROM clientes where removido IS NOT TRUE ORDER BY id ASC"
+      "SELECT * " + "FROM clientes where softDelete IS NOT TRUE ORDER BY id ASC"
     )
   ).rows;
 };
@@ -52,7 +52,7 @@ const UpdateCliente = async (registroPar) => {
     const result = await db.query(
       "UPDATE clientes SET " +
         "email = $2, " +
-        "nome = $3 " + // Removida vírgula extra aqui
+        "nome = $3 " + 
         "WHERE id = $1",
       [
         registroPar.id,        // $1
@@ -83,9 +83,9 @@ const DeleteCliente = async (registroPar) => {
   let msg = "ok";
 
   try {
-    // Atualiza o campo `removido` para TRUE
+    // Atualiza o campo `softDelete` para TRUE
     linhasAfetadas = ( await db.query(
-      "UPDATE clientes SET removido = TRUE WHERE id = $1", [
+      "UPDATE clientes SET softDelete = TRUE WHERE id = $1", [
         registroPar.id,
       ])
     ).rowCount;

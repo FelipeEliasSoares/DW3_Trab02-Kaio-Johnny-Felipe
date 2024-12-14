@@ -8,7 +8,7 @@ const GetAllMotoristasVeiculos = async (filtro = {}) => {
         FROM MotoristasVeiculos mv
         INNER JOIN Motoristas m ON mv.motoristaID = m.id
         INNER JOIN Veiculos v ON mv.veiculoID = v.id
-        WHERE mv.removido = FALSE
+        WHERE mv.softDelete = FALSE
     `;
 
     const queryParams = [];
@@ -37,7 +37,7 @@ const GetMotoristaVeiculoByID = async (id) => {
              FROM MotoristasVeiculos mv
              INNER JOIN Motoristas m ON mv.motoristaID = m.id
              INNER JOIN Veiculos v ON mv.veiculoID = v.id
-             WHERE mv.id = $1 AND mv.removido = FALSE`
+             WHERE mv.id = $1 AND mv.softDelete = FALSE`
             [id]
         )
     ).rows[0];
@@ -66,7 +66,7 @@ const UpdateMotoristaVeiculo = async (registro) => {
     try {
         linhasAfetadas = (
             await db.query(
-                "UPDATE MotoristasVeiculos SET motoristaID = $2, veiculoID = $3 WHERE id = $1 AND removido = FALSE",
+                "UPDATE MotoristasVeiculos SET motoristaID = $2, veiculoID = $3 WHERE id = $1 AND softDelete = FALSE",
                 [registro.id, registro.motoristaID, registro.veiculoID]
             )
         ).rowCount;
@@ -83,7 +83,7 @@ const DeleteMotoristaVeiculo = async (id) => {
     try {
         linhasAfetadas = (
             await db.query(
-                "UPDATE MotoristasVeiculos SET removido = TRUE WHERE id = $1",
+                "UPDATE MotoristasVeiculos SET softDelete = TRUE WHERE id = $1",
                 [id]
             )
         ).rowCount;

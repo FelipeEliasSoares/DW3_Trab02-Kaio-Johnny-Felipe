@@ -1,5 +1,5 @@
 //* Importando ícones do lucide-react
-import { LogOut, CreditCard } from "lucide-react";
+import { LogOut, User, Truck, Car } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -31,26 +31,37 @@ export function AppSidebar() {
                     href="/dashboard/motoristas"
                     className="flex items-center space-x-2"
                   >
-                    <CreditCard />
+                    <Truck />
                     <span>Motoristas</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
               {/* Item único "Veiculos" */}
-
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link
                     href="/dashboard/veiculos"
                     className="flex items-center space-x-2"
                   >
-                    <CreditCard />
+                    <Car />
                     <span>Veiculos</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
 
+              {/* Item único Clientes */}
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link
+                    href="/dashboard/clientes"
+                    className="flex items-center space-x-2"
+                  >
+                    <User />
+                    <span>Clientes</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

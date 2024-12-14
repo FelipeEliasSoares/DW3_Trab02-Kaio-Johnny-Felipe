@@ -20,7 +20,7 @@ export const useGetAllMotoristas = () => {
     try {
       setLoading(true);
       const response = await api.get<GetAllMotoristasResponse>("/motoristas");
-      setMotoristas(response.data.motorista);
+      setMotoristas(response.data.motoristas);
       setError(null);
     } catch (err: any) {
       setError(err.response?.data?.message || "Erro ao carregar Motoristas.");
@@ -38,7 +38,7 @@ export const useGetAllMotoristas = () => {
 
 // Hook para obter uma Motoristapor ID
 export const useGetMotoristaById = (id: string | undefined) => {
-  const [Motorista, setMotorista] = useState<Motorista| null>(null);
+  const [motorista, setMotorista] = useState<Motorista| null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -64,7 +64,7 @@ export const useGetMotoristaById = (id: string | undefined) => {
     fetchMotorista();
   }, [fetchMotorista]);
 
-  return { Motorista, loading, error, refetch: fetchMotorista};
+  return { motorista, loading, error, refetch: fetchMotorista};
 };
 
 export const useInsertMotorista= () => {
@@ -107,14 +107,17 @@ export const useUpdateMotorista= () => {
       throw new Error("Usuário não autenticado.");
     }
 
+    console.log(id,updatedMotorista);
+
     try {
       setLoading(true);
-      const dataWithUser = { ...updatedMotorista, usuario_id: user.id };
+      const dataWithUser = { ...updatedMotorista, id };
       const response = await api.put<Motorista>(`/motoristas/${id}`, dataWithUser);
       setError(null);
-      return response.data;
+      console.log(response);
+      return response;
     } catch (err: any) {
-      setError(err.response?.data?.message || "Erro ao atualizar a Motorista.");
+      setError(err);
       throw err;
     } finally {
       setLoading(false);
@@ -132,7 +135,8 @@ export const useDeleteMotorista= () => {
   const deleteMotorista= async (id: string) => {
     try {
       setLoading(true);
-      await api.delete(`/motoristas/${id}`);
+      const response= await api.delete(`/motoristas/${id}`);
+      console.log(response);
       setError(null);
     } catch (err: any) {
       setError(err.response?.data?.message || "Erro ao deletar a Motorista.");
