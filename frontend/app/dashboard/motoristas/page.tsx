@@ -25,11 +25,13 @@ const ITEMS_PER_PAGE = 10;
 export default function MotoristaPage() {
   const [isPending, startTransition] = useTransition();
   const { motoristas, loading, error, refetch } = useGetAllMotoristas();
+  
   const {
     insertMotorista,
     loading: inserting,
     error: insertError,
   } = useInsertMotorista();
+
   const {
     deleteMotorista,
     loading: deleting,

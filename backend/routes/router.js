@@ -2,7 +2,6 @@ const express = require("express");
 const routerApp = express.Router();
 
 const appLogin = require("../apps/login/controller/ctlLogin");
-const appContas = require("../apps/contas/controller/ctlContas");
 const appMotoristas = require("../apps/motoristas/controller/ctlMotoristas");
 
 const Me = require("../apps/middleware/auth");
