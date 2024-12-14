@@ -66,7 +66,7 @@ const UpdateMotoristaVeiculo = async (registro) => {
     try {
         linhasAfetadas = (
             await db.query(
-                "UPDATE MotoristasVeiculos SET motoristaID = $2, veiculoID = $3 WHERE id = $1 AND softDelete = FALSE",
+                "UPDATE MotoristasVeiculos SET motoristaID = $2, veiculoID = $3 WHERE id = $1 AND removido = FALSE",
                 [registro.id, registro.motoristaID, registro.veiculoID]
             )
         ).rowCount;
