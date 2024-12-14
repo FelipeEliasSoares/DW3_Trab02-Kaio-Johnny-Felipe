@@ -1,4 +1,4 @@
--- Criação das tabelas do banco de dados
+
 
 -- Tabela Motoristas
 CREATE TABLE Motoristas (
@@ -33,6 +33,14 @@ CREATE TABLE MotoristasVeiculos (
 CREATE TABLE Clientes (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email VARCHAR(255) NOT NULL,
+    dataContratacao DATE NOT NULL,
+    softDelete BOOLEAN DEFAULT FALSE
+);
+
+-- Criação da tabela usuario com UUID
+CREATE TABLE usuario (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
     nome VARCHAR(255) NOT NULL,
     dataCadastro DATE NOT NULL,
     softDelete BOOLEAN DEFAULT FALSE
@@ -65,3 +73,8 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 INSERT INTO Login (login, senha, dataCriacao, softDelete)
 VALUES 
     ('admin', crypt('admin', gen_salt('bf')), CURRENT_DATE, TRUE);
+
+
+ALTER TABLE veiculos
+ALTER COLUMN placa TYPE character varying(50),
+ALTER COLUMN modelo TYPE character varying(50);

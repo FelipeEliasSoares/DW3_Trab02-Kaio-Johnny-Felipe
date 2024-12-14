@@ -1,0 +1,38 @@
+### teste de login ###
+POST http://localhost:4000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "login": "admin",
+    "senha": "admin"
+}
+
+### teste de buscar todas os motoristasVeiculos ###
+GET http://localhost:4000/motoristas-veiculos?motoristaNome=&veiculoPlaca= HTTP/1.1
+content-type: application/json
+
+### teste de buscar motoristaVeiculo por ID ###
+GET http://localhost:4000/motoristas-veiculos/b64ea76f-7e20-40da-8c15-7095d12acb3d HTTP/1.1
+content-type: application/json
+
+### teste de inserção de motoristaVeiculo ###
+POST http://localhost:4000/motoristas-veiculos HTTP/1.1
+content-type: application/json
+
+{
+    "motoristaID": "7188e111-57f3-458d-90ef-9c941f217cb4",
+    "veiculoID": "671f26ce-9ae5-4908-8e02-fc52b5a10e5d"
+}
+
+### teste de atualização de motoristaVeiculo ###
+PUT http://localhost:4000/motoristas-veiculos/71e9a82e-3a2a-455b-a18b-e0795d7488de HTTP/1.1
+Content-Type: application/json
+
+{
+    "motoristaID": "88355e48-6e5b-4514-8b87-b57dcafc4fa3",
+    "veiculoID": "671f26ce-9ae5-4908-8e02-fc52b5a10e5d"
+}
+
+### teste de exclusão de motoristaVeiculo ###
+DELETE http://localhost:4000/motoristas-veiculos/10ddbedc-606f-4c40-b9bd-818f574ba7ca HTTP/1.1
+content-type: application/json
