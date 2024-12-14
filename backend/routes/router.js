@@ -2,11 +2,13 @@ const express = require("express");
 const routerApp = express.Router();
 
 const appLogin = require("../apps/login/controller/ctlLogin");
+
 const Me = require("../apps/middleware/auth");
 const appClientes = require("../apps/clientes/controller/ctlClientes");
 const appVeiculos = require("../apps/veiculos/controller/ctlVeiculos");
 const appMotoristas = require("../apps/motoristas/controller/ctlMotoristas");
 const appMotoristasVeiculos = require("../apps/motoristasVeiculos/controller/ctlMotoristasVeiculos");
+
 
 routerApp.use((req, res, next) => {
   next();
@@ -23,12 +25,13 @@ routerApp.post("/logout", appLogin.Logout);
 routerApp.get("/api/auth/me", Me, appLogin.Me);
 
 
-// Rotas de Motoristas
+/// Rotas de Motoristas
 routerApp.get("/motoristas", Me, appMotoristas.GetAllMotoristas);
 routerApp.get("/motoristas/:id", Me, appMotoristas.GetMotoristaByID);
 routerApp.post("/motoristas", Me, appMotoristas.InsertMotorista);
 routerApp.put("/motoristas/:id", Me, appMotoristas.UpdateMotorista);
 routerApp.delete("/motoristas/:id", Me, appMotoristas.DeleteMotorista);
+
 
 // Rotas de Veiculos
 routerApp.get("/veiculos", Me, appVeiculos.GetAllVeiculos);

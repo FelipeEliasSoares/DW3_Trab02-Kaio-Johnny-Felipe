@@ -14,7 +14,7 @@ content-type: application/json
 
 
 ### teste de buscar motorista por ID ###
-GET http://localhost:4000/motoristas/fb6faa5e-6128-4740-ba03-2bb13732c2ed HTTP/1.1
+GET http://localhost:4000/motoristas/6bbbb5fb-4475-4ba3-a05c-9c9e49aa386a HTTP/1.1
 content-type: application/json
 
 
@@ -30,8 +30,10 @@ content-type: application/json
     "dataContratacao": "2024-11-13"
 }
 
+
 ### teste de atualização de motorista ###
 Put http://localhost:4000/motoristas/2b5f9822-401f-4655-a10f-94614082d4a6 HTTP/1.1
+
 content-type: application/json
 
 {

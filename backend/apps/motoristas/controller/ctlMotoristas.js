@@ -3,10 +3,10 @@ const mdlMotorista = require("../model/mdlMotoristas");
 // Função para obter todas as contas
 const GetAllMotoristas = async (req, res) => {
   try {
-    const registros = await mdlMotorista.GetAllMotoristas();
-    res.json({ status: "ok", registros });
+    const motoristas = await mdlMotorista.GetAllMotoristas();
+    res.json({ status: "ok", motoristas });
   } catch (error) {
-    res.status(500).json({ status: "erro", mensagem: "Erro ao obter as Motoristas", erro: error.message });
+    res.status(500).json({ status: 500, mensagem: "Erro ao obter as Motoristas", erro: error.message });
   }
 };
 
@@ -14,9 +14,9 @@ const GetAllMotoristas = async (req, res) => {
 const GetMotoristaByID = async (req, res) => {
   try {
     const MotoristaID = req.params.id;  // Assegure-se de que está enviando um ID no corpo da requisição
-    const registro = await mdlMotorista.GetMotoristaByID(MotoristaID);
-    if (registro) {
-      res.json({ status: "ok", registro });
+    const motorista = await mdlMotorista.GetMotoristaByID(MotoristaID);
+    if (motorista) {
+      res.json({ status: "ok", motorista });
     } else {
       res.status(404).json({ status: "erro", mensagem: "Motorista não encontrada" });
     }
@@ -28,8 +28,8 @@ const GetMotoristaByID = async (req, res) => {
 // Função para inserir uma nova conta
 const InsertMotorista = async (req, res) => {
   try {
-    const registro = req.body;
-    const { msg, linhasAfetadas } = await mdlMotorista.InsertMotorista(registro);
+    const motorista = req.body;
+    const { msg, linhasAfetadas } = await mdlMotorista.InsertMotorista(motorista);
     res.json({ status: msg, linhasAfetadas });
   } catch (error) {
     res.status(500).json({ status: "erro", mensagem: "Erro ao inserir Motorista", erro: error.message });
@@ -43,13 +43,13 @@ const UpdateMotorista = async (req, res) => {
     const { id } = req.params;
 
     // Os dados para atualização vêm do corpo da requisição
-    const registro = req.body;
+    const motorista = req.body;
 
-    // Adicionar o ID ao registro
-    registro.id = id;
+    // Adicionar o ID ao motorista
+    motorista.id = id;
 
     // Atualizar a conta com o ID e os dados
-    const { msg, linhasAfetadas } = await mdlMotorista.UpdateMotorista(registro);
+    const { msg, linhasAfetadas } = await mdlMotorista.UpdateMotorista(motorista);
 
     // Retornar a resposta com o status e número de linhas afetadas
     res.json({ status: msg, linhasAfetadas });
