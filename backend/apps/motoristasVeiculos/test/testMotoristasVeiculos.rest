@@ -12,7 +12,7 @@ GET http://localhost:4000/motoristas-veiculos?motoristaNome=&veiculoPlaca= HTTP/
 content-type: application/json
 
 ### teste de buscar motoristaVeiculo por ID ###
-GET http://localhost:4000/motoristas-veiculos/b64ea76f-7e20-40da-8c15-7095d12acb3d HTTP/1.1
+GET http://localhost:4000/motoristas-veiculos/96ce250c-e468-442c-b02d-48c40cbad084 HTTP/1.1
 content-type: application/json
 
 ### teste de inserção de motoristaVeiculo ###
@@ -20,8 +20,8 @@ POST http://localhost:4000/motoristas-veiculos HTTP/1.1
 content-type: application/json
 
 {
-    "motoristaID": "7188e111-57f3-458d-90ef-9c941f217cb4",
-    "veiculoID": "671f26ce-9ae5-4908-8e02-fc52b5a10e5d"
+    "motorista_id": "6cc5ca55-4dbf-427a-9b72-8b4f2ae5aa43",
+    "veiculo_id": "27028201-1322-451e-ad24-ce0dc338fb5e"
 }
 
 ### teste de atualização de motoristaVeiculo ###
@@ -34,5 +34,5 @@ Content-Type: application/json
 }
 
 ### teste de exclusão de motoristaVeiculo ###
-DELETE http://localhost:4000/motoristas-veiculos/10ddbedc-606f-4c40-b9bd-818f574ba7ca HTTP/1.1
+DELETE http://localhost:4000/motoristas-veiculos/f9484cd0-3183-4a71-b80f-c1f38bedaee9 HTTP/1.1
 content-type: application/json

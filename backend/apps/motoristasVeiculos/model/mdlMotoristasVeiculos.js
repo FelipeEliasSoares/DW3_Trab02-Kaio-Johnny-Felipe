@@ -30,18 +30,25 @@ const GetAllMotoristasVeiculos = async (filtro = {}) => {
 };
 
 const GetMotoristaVeiculoByID = async (id) => {
-    return (
-        await db.query(
-            `SELECT mv.*, m.nome AS motorista_nome, m.cpf AS motorista_cpf, 
-                    v.placa AS veiculo_placa, v.modelo AS veiculo_modelo
-             FROM MotoristasVeiculos mv
-             INNER JOIN Motoristas m ON mv.motoristaID = m.id
-             INNER JOIN Veiculos v ON mv.veiculoID = v.id
-             WHERE mv.id = $1 AND mv.softDelete = FALSE`
-            [id]
-        )
-    ).rows[0];
+  if (!id) {
+    throw new Error("O parâmetro 'id' é obrigatório.");
+  }
+
+  const query = `
+        SELECT mv.*, 
+               m.nome AS motorista_nome, m.cpf AS motorista_cpf, 
+               v.placa AS veiculo_placa, v.modelo AS veiculo_modelo
+        FROM MotoristasVeiculos mv
+        INNER JOIN Motoristas m ON mv.motoristaID = m.id
+        INNER JOIN Veiculos v ON mv.veiculoID = v.id
+        WHERE mv.id = $1 AND mv.softDelete = FALSE
+    `;
+
+  const result = await db.query(query, [id]);
+  return result.rows[0];
 };
+
+
 
 const InsertMotoristaVeiculo = async (registro) => {
     let linhasAfetadas;
