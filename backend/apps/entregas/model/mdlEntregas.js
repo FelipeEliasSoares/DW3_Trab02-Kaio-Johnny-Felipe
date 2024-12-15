@@ -72,7 +72,7 @@ const InsertEntrega = async (registro) => {
             )
         ).rowCount;
     } catch (error) {
-        msg = `[mdlEntregas|InsertEntrega] ${error.detail}`;
+        msg = `[mdlEntregas|InsertEntrega] Error: ${error.detail}`;
         linhasAfetadas = -1;
     }
     return { msg, linhasAfetadas };
