@@ -101,7 +101,7 @@ const UpdateEntrega = async (registro) => { if (!registro.id || !registro.descri
     return { msg, linhasAfetadas };
 };
 
-const DeleteEntrega = async (id) => {
+const DeleteEntrega = async (id) => { if (!id || isNaN(id)) { return { msg: 'Invalid ID', linhasAfetadas: 0 }; }
     let linhasAfetadas;
     let msg = "ok";
     try {
