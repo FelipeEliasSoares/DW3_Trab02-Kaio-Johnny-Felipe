@@ -114,7 +114,7 @@ const DeleteEntrega = async (id) => {
             )
         ).rowCount;
     } catch (error) {
-        msg = `[mdlEntregas|DeleteEntrega] ${error.detail}`;
+        msg = `[Error in DeleteEntrega] ${error.detail}`;
         linhasAfetadas = -1;
     }
     return { msg, linhasAfetadas };
