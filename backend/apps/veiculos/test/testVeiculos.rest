@@ -1,0 +1,40 @@
+### teste de login ###
+POST http://localhost:4000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "login": "admin",
+    "senha": "admin"
+}
+
+### todas os usuarios não deletados ###
+GET http://localhost:4000/veiculos HTTP/1.1
+content-type: application/json
+
+####teste de pegar usuario por ID ####
+GET http://localhost:4000/veiculos/02e4ecdd-1f99-46ba-9046-081c90d5f81d HTTP/1.1
+content-type: application/json
+
+####teste de inserção de usuario ####
+POST http://localhost:4000/veiculos HTTP/1.1
+content-type: application/json
+
+{
+    "placa": "testePlaca2",
+    "modelo": "testeModelo2",
+    "DataAquisicao": "01/01/0001"
+}
+
+#### teste atualizar usuario ####
+PUT http://localhost:4000/veiculos/8f0fd5ae-9c37-42c5-8828-d9e07a39c9d4  HTTP/1.1
+content-type: application/json
+
+{
+    "placa": "testePlacaMod",
+    "modelo": "testeModeloMod",
+    "DataAquisicao": "01/01/0002"
+}
+
+#### teste deletar usuario
+DELETE http://localhost:4000/veiculos/02e4ecdd-1f99-46ba-9046-081c90d5f81d HTTP/1.1
+content-type: application/json

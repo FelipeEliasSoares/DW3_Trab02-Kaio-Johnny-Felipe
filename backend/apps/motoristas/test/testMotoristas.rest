@@ -1,0 +1,46 @@
+### teste de login ###
+POST http://localhost:4000/Login HTTP/1.1
+content-type: application/json
+
+{
+    "login": "admin",
+    "senha": "admin"
+}
+
+
+### teste de buscar todas os motoristas ###
+GET http://localhost:4000/motoristas HTTP/1.1
+content-type: application/json
+
+
+### teste de buscar motorista por ID ###
+GET http://localhost:4000/motoristas/6bbbb5fb-4475-4ba3-a05c-9c9e49aa386a HTTP/1.1
+content-type: application/json
+
+
+### teste de inserção de motorista ###
+
+POST http://localhost:4000/motoristas HTTP/1.1
+content-type: application/json
+
+{
+    "nome": "felipe",
+    "cpf": "12312312111",
+    "email": "felipe@gmail.com",
+    "dataContratacao": "2024-11-13"
+}
+
+
+### teste de atualização de motorista ###
+Put http://localhost:4000/motoristas/6bbbb5fb-4475-4ba3-a05c-9c9e49aa386a HTTP/1.1
+content-type: application/json
+
+{
+    "nome": "Novo Nome"
+}
+
+
+### teste de exclusão de motorista ###
+delete http://localhost:4000/motoristas/45031690-4d69-41e8-9658-dd20d9f38e88 HTTP/1.1
+content-type: application/json
+
