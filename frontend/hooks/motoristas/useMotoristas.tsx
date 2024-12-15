@@ -107,14 +107,12 @@ export const useUpdateMotorista= () => {
       throw new Error("Usuário não autenticado.");
     }
 
-    console.log(id,updatedMotorista);
 
     try {
       setLoading(true);
       const dataWithUser = { ...updatedMotorista, id };
       const response = await api.put<Motorista>(`/motoristas/${id}`, dataWithUser);
       setError(null);
-      console.log(response);
       return response;
     } catch (err: any) {
       setError(err);
@@ -136,7 +134,6 @@ export const useDeleteMotorista= () => {
     try {
       setLoading(true);
       const response= await api.delete(`/motoristas/${id}`);
-      console.log(response);
       setError(null);
     } catch (err: any) {
       setError(err.response?.data?.message || "Erro ao deletar a Motorista.");

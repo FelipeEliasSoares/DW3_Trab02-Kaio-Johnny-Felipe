@@ -20,7 +20,6 @@ export const useGetAllClientes = () => {
     try {
       setLoading(true);
       const response = await api.get<GetAllClientesResponse>("/clientes");
-      console.log(response);
       setClientes(response.data.clientes);
       setError(null);
     } catch (err: any) {
@@ -50,7 +49,6 @@ export const useGetClientesById = (id: string | undefined) => {
       const response = await api.get<GetClientesByIdResponse>(
         `/clientes/${id}`
       );
-      console.log(response);
       if (response.data.clientes) {
         setClientes(response.data.clientes[0] || null);
       } else {
@@ -114,7 +112,6 @@ export const useUpdateClientes = () => {
       throw new Error("Usuário não autenticado.");
     }
 
-    console.log(id, updatedClientes);
 
     try {
       setLoading(true);
@@ -125,7 +122,6 @@ export const useUpdateClientes = () => {
 
       const response = await api.put(`/clientes/${id}`, dataToSend);
       setError(null);
-      console.log(response);
       return response;
     } catch (err: any) {
       setError(err);
@@ -148,7 +144,6 @@ export const useDeleteClientes = () => {
     try {
       setLoading(true);
       const response = await api.delete(`/clientes/${id}`);
-      console.log(response);
       setError(null);
     } catch (err: any) {
       setError(err.response?.data?.message || "Erro ao deletar a Clientes.");

@@ -20,7 +20,6 @@ export const useGetAllveiculos = () => {
     try {
       setLoading(true);
       const response = await api.get<GetAllVeiculosResponse>("/veiculos");
-      console.log(response);
       setveiculos(response.data.veiculos);
       setError(null);
     } catch (err: any) {
@@ -50,7 +49,6 @@ export const useGetVeiculosById = (id: string | undefined) => {
       const response = await api.get<GetVeiculosByIdResponse>(
         `/veiculos/${id}`
       );
-      console.log(response);
       if (response.data.veiculos) {
         setVeiculos(response.data.veiculos[0] || null);
       } else {
@@ -114,7 +112,6 @@ export const useUpdateVeiculos = () => {
       throw new Error("Usuário não autenticado.");
     }
 
-    console.log(id, updatedVeiculos);
 
     try {
       setLoading(true);
@@ -125,7 +122,6 @@ export const useUpdateVeiculos = () => {
       };
       const response = await api.put(`/veiculos/${id}`, dataToSend);
       setError(null);
-      console.log(response);
       return response;
     } catch (err: any) {
       setError(err);
@@ -147,7 +143,6 @@ export const useDeleteVeiculos = () => {
     try {
       setLoading(true);
       const response = await api.delete(`/veiculos/${id}`);
-      console.log(response);
       setError(null);
     } catch (err: any) {
       setError(err.response?.data?.message || "Erro ao deletar a Veiculos.");

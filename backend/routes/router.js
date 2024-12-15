@@ -55,12 +55,6 @@ routerApp.post("/entregas", Me, appEntregas.InsertEntrega);
 routerApp.put("/entregas/:id", Me, appEntregas.UpdateEntrega);
 routerApp.delete("/entregas/:id", Me, appEntregas.DeleteEntrega);
 
-// Rotas de Usuários
-routerApp.get("/usuarios", Me, appUsuarios.GetAllUsuarios);
-routerApp.get("/usuarios/:id", Me, appUsuarios.GetUsuarioByID);
-routerApp.post("/usuarios", Me, appUsuarios.InsertUsuario);
-routerApp.put("/usuarios/:id", Me, appUsuarios.UpdateUsuario);
-routerApp.delete("/usuarios/:id", Me, appUsuarios.DeleteUsuario);
 
 // Rotas para MotoristasVeiculos
 routerApp.get("/motoristas-veiculos", Me, appMotoristasVeiculos.GetAllMotoristasVeiculos);

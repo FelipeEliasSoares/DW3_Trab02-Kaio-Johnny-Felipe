@@ -90,6 +90,22 @@ export function AppSidebar() {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+
+              {/* Item único "Entregas" */}
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                    <Link
+                    href="/dashboard/entregas"
+                    className={`flex items-center space-x-2 p-2 ${getActiveClass(
+                      "/dashboard/entregas"
+                    )}`}
+                    >
+                    <ClipboardList />
+                    <span>Entregas</span>
+                    </Link>
+                </SidebarMenuButton>
+
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

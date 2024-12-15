@@ -84,7 +84,6 @@ export default function EditClientePage() {
         email: formData.email,
       };
 
-      console.log("Data being sent:", dataToSend);
 
       await updateClientes(id, dataToSend);
       router.push("/dashboard/clientes");

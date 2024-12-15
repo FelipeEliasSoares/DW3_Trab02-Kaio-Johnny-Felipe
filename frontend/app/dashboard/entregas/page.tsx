@@ -8,45 +8,39 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { MotoristaVeiculoTable } from "../motoristas-veiculos/MotoristaVeiculoTable";
-import { MotoristaVeiculoFormDialog } from "../motoristas-veiculos/MotoristaVeiculoFormDialog";
+import { EntregaTable } from "../entregas/EntregaTable";
+import { EntregaFormDialog } from "../entregas/EntregaFormDialog";
 import {
-  useGetAllMotoristaVeiculos,
-  useInsertMotoristaVeiculo,
-  useDeleteMotoristaVeiculo,
-} from "../../../hooks/motoristaVeiculo/useMotoristaVeiculo";
-import { useGetAllMotoristas } from "../../../hooks/motoristas/useMotoristas";
-import { useGetAllveiculos } from "../../../hooks/veiculos/useVeiculos";
-import {
-  MotoristaVeiculo,
-  CreateMotoristaVeiculoInput,
-} from "../../../hooks/motoristaVeiculo/types/types";
+  useGetAllEntregas,
+  useInsertEntrega,
+  useDeleteEntrega,
+} from "@/hooks/entregas/useEntregas";
+import { useGetAllClientes } from "@/hooks/clientes/useClientes";
+import { useGetAllMotoristaVeiculos } from "@/hooks/motoristaVeiculo/useMotoristaVeiculo";
+import { CreateEntregaInput, Entrega } from "@/hooks/entregas/types/types";
 
 const ITEMS_PER_PAGE = 10;
 
-export default function MotoristaVeiculoPage() {
+export default function EntregasPage() {
   const [isPending, startTransition] = useTransition();
-  const { motoristaVeiculos, loading, error, refetch } =
-    useGetAllMotoristaVeiculos();
-  const { motoristas } = useGetAllMotoristas();
-  const { veiculos } = useGetAllveiculos();
+  const { entregas, loading, error, refetch } = useGetAllEntregas();
+  const { clientes } = useGetAllClientes();
+  const { motoristaVeiculos } = useGetAllMotoristaVeiculos();
 
 
   const {
-    insertMotoristaVeiculo,
+    insertEntrega,
     loading: inserting,
     error: insertError,
-  } = useInsertMotoristaVeiculo();
+  } = useInsertEntrega();
 
   const {
-    deleteMotoristaVeiculo,
+    deleteEntrega,
     loading: deleting,
     error: deleteError,
-  } = useDeleteMotoristaVeiculo();
+  } = useDeleteEntrega();
 
-  const [novoRegistro, setNovoRegistro] = useState<Partial<MotoristaVeiculo>>(
-    {}
-  );
+  const [novoRegistro, setNovoRegistro] = useState<Partial<Entrega>>({});
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,10 +48,10 @@ export default function MotoristaVeiculoPage() {
   // Filtro e paginação
   const { paginatedRecords, totalPages } = useMemo(() => {
     const filtered =
-      motoristaVeiculos?.filter(
-        (mv) =>
-          mv.motorista_nome.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          mv.veiculo_placa.toLowerCase().includes(searchQuery.toLowerCase())
+      entregas?.filter(
+        (entrega) =>
+          entrega.descricao.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          entrega.cliente_nome.toLowerCase().includes(searchQuery.toLowerCase())
       ) || [];
 
     const start = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -67,7 +61,7 @@ export default function MotoristaVeiculoPage() {
       paginatedRecords: filtered.slice(start, end),
       totalPages: Math.ceil(filtered.length / ITEMS_PER_PAGE),
     };
-  }, [motoristaVeiculos, searchQuery, currentPage]);
+  }, [entregas, searchQuery, currentPage]);
 
   const handleSearch = useCallback((value: string) => {
     setSearchQuery(value);
@@ -75,35 +69,35 @@ export default function MotoristaVeiculoPage() {
   }, []);
 
   const adicionarRegistro = useCallback(
-    async (data: CreateMotoristaVeiculoInput) => {
+    async (data: CreateEntregaInput) => {
       try {
-        await insertMotoristaVeiculo(data);
+        await insertEntrega(data);
         setIsDialogOpen(false);
         setNovoRegistro({});
         startTransition(() => {
           refetch();
         });
       } catch (error) {
-        console.error("Erro ao inserir MotoristaVeiculo:", error);
+        console.error("Erro ao inserir Entrega:", error);
       }
     },
-    [insertMotoristaVeiculo, refetch]
+    [insertEntrega, refetch]
   );
 
   const deletarRegistro = useCallback(
     async (id: string) => {
-      if (confirm("Tem certeza que deseja deletar este MotoristaVeiculo?")) {
+      if (confirm("Tem certeza que deseja deletar esta Entrega?")) {
         try {
-          await deleteMotoristaVeiculo(id);
+          await deleteEntrega(id);
           startTransition(() => {
             refetch();
           });
         } catch (error) {
-          console.error("Erro ao deletar MotoristaVeiculo:", error);
+          console.error("Erro ao deletar Entrega:", error);
         }
       }
     },
-    [deleteMotoristaVeiculo, refetch]
+    [deleteEntrega, refetch]
   );
 
   return (
@@ -111,16 +105,16 @@ export default function MotoristaVeiculoPage() {
       <Card className="max-w-7xl mx-auto">
         <CardHeader>
           <CardTitle className="text-3xl font-bold">
-            Gestão de Motorista e Veículo
+            Gestão de Entregas
           </CardTitle>
           <CardDescription>
-            Gerencie as associações entre Motoristas e Veículos
+            Gerencie as entregas cadastradas no sistema
           </CardDescription>
         </CardHeader>
 
         <CardContent>
-          <MotoristaVeiculoTable
-            motoristaVeiculos={paginatedRecords}
+          <EntregaTable
+            entregas={paginatedRecords}
             loading={loading}
             error={error || insertError || deleteError || null}
             searchQuery={searchQuery}
@@ -135,12 +129,12 @@ export default function MotoristaVeiculoPage() {
         </CardContent>
       </Card>
 
-      <MotoristaVeiculoFormDialog
+      <EntregaFormDialog
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         onSubmit={adicionarRegistro}
-        motoristas={motoristas}
-        veiculos={veiculos}
+        clientes={clientes || []}
+        motoristaVeiculos={motoristaVeiculos || []}
         loading={inserting}
         formData={novoRegistro}
         setFormData={setNovoRegistro}

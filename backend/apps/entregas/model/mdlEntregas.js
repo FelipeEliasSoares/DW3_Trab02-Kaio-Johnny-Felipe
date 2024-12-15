@@ -8,7 +8,7 @@ const GetAllEntregas = async (filtro = {}) => {
         FROM Entregas e
         LEFT JOIN MotoristasVeiculos mv ON e.motorisVeiculoId = mv.id
         LEFT JOIN Clientes c ON e.clienteID = c.id
-        WHERE e.removido = FALSE
+        WHERE e.softDelete = FALSE
     `;
 
     const queryParams = [];
@@ -49,7 +49,7 @@ const GetEntregaByID = async (id) => {
              FROM Entregas e
              LEFT JOIN MotoristasVeiculos mv ON e.motorisVeiculoId = mv.id
              LEFT JOIN Clientes c ON e.clienteID = c.id
-             WHERE e.id = $1 AND e.removido = FALSE`,
+             WHERE e.id = $1 AND e.softDelete = FALSE`,
             [id]
         )
     ).rows[0];
@@ -78,28 +78,59 @@ const InsertEntrega = async (registro) => {
     return { msg, linhasAfetadas };
 };
 
-const UpdateEntrega = async (registro) => { if (!registro.id || !registro.descricao || !registro.dataInicio || !registro.dataEntrega || !registro.motorisVeiculoId || !registro.clienteID) { throw new Error('Invalid input data'); }
+// Função para atualizar uma Entrega
+const UpdateEntrega = async (registro) => { 
+    console.log("Recebendo atualização para Entrega:", registro);
+    
+    // Padronização dos nomes dos campos
+    if (
+        !registro.id || 
+        !registro.descricao || 
+        !registro.dataInicio || 
+        !registro.dataEntrega || 
+        !registro.motoristaVeiculoId || 
+        !registro.clienteID
+    ) { 
+        console.error("Dados inválidos para atualização:", registro);
+        throw new Error('Invalid input data'); 
+    }
+
     let linhasAfetadas;
     let msg = "ok";
+
     try {
         linhasAfetadas = (
             await db.query(
-            `UPDATE Entregas SET 
-                 descricao = $2, 
-                 dataInicio = $3, 
-                 dataEntrega = $4, 
-                 motorisVeiculoId = $5, 
-                 clienteID = $6
-            WHERE id = $1 AND removido = FALSE`,
-                [registro.id, registro.descricao, registro.dataInicio, registro.dataEntrega, registro.motorisVeiculoId, registro.clienteID]
+                `UPDATE Entregas SET 
+                    descricao = $2, 
+                    dataInicio = $3, 
+                    dataEntrega = $4, 
+                    motoristaVeiculoId = $5, 
+                    clienteID = $6
+                WHERE id = $1 AND softDelete = FALSE`,
+                [
+                    registro.id, 
+                    registro.descricao, 
+                    registro.dataInicio, 
+                    registro.dataEntrega, 
+                    registro.motoristaVeiculoId, 
+                    registro.clienteID
+                ]
             )
         ).rowCount;
+
+        console.log(`Linhas afetadas: ${linhasAfetadas}`);
     } catch (error) {
-        msg = `[mdlEntregas|UpdateEntrega] ${error.detail}`;
+        msg = `[mdlEntregas|UpdateEntrega] ${error.detail || error.message}`;
         linhasAfetadas = -1;
+        console.error("Erro ao atualizar entrega:", error);
     }
+
     return { msg, linhasAfetadas };
 };
+
+
+
 
 const DeleteEntrega = async (id) => { if (!id || isNaN(id)) { return { msg: 'Invalid ID', linhasAfetadas: 0 }; }
     let linhasAfetadas;
@@ -108,7 +139,7 @@ const DeleteEntrega = async (id) => { if (!id || isNaN(id)) { return { msg: 'Inv
         linhasAfetadas = (
             await db.query(
                 `UPDATE Entregas SET 
-                    removido = TRUE 
+                    softDelete = TRUE 
                  WHERE id = $1`,
                 [id]
             )

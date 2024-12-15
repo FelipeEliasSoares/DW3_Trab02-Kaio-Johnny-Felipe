@@ -36,15 +36,30 @@ const InsertEntrega = async (req, res) => {
 };
 
 const UpdateEntrega = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const registro = { ...req.body, id };
-        const { msg, linhasAfetadas } = await mdlEntregas.UpdateEntrega(registro);
-        res.json({ status: linhasAfetadas > 0 ? 'success' : 'failure', linhasAfetadas });
-    } catch (error) {
-        res.status(500).json({ status: "erro", mensagem: "Erro ao atualizar entrega", erro: error.message });
-    }
+  try {
+    const { id } = req.params;
+    const registro = { ...req.body, id };
+
+    // Log para depuração
+    console.log("Requisição de atualização recebida:", registro);
+
+    const { msg, linhasAfetadas } = await mdlEntregas.UpdateEntrega(registro);
+    res.json({
+      status: linhasAfetadas > 0 ? "success" : "failure",
+      linhasAfetadas,
+      msg, // Adiciona a mensagem de erro ou sucesso
+    });
+  } catch (error) {
+    console.error("Erro no handler de UpdateEntrega:", error);
+    res.status(500).json({
+      status: "erro",
+      mensagem: "Erro ao atualizar entrega",
+      erro: error.message,
+    });
+  }
 };
+
+
 
 const DeleteEntrega = async (req, res) => {
     try {
