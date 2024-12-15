@@ -78,7 +78,7 @@ const InsertEntrega = async (registro) => {
     return { msg, linhasAfetadas };
 };
 
-const UpdateEntrega = async (registro) => {
+const UpdateEntrega = async (registro) => { if (!registro.id || !registro.descricao || !registro.dataInicio || !registro.dataEntrega || !registro.motorisVeiculoId || !registro.clienteID) { throw new Error('Invalid input data'); }
     let linhasAfetadas;
     let msg = "ok";
     try {
