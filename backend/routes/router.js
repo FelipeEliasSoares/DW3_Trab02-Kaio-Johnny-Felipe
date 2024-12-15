@@ -2,11 +2,14 @@ const express = require("express");
 const routerApp = express.Router();
 
 const appLogin = require("../apps/login/controller/ctlLogin");
+
 const Me = require("../apps/middleware/auth");
-const appUsuarios = require("../apps/usuarios/controller/ctlUsuarios");
-const appVeiculos = require("../apps/veiculos/controller/ctlVeiculos");
 const appClientes = require("../apps/clientes/controller/ctlClientes");
 const appEntregas = require("../apps/entregas/controller/ctlEntregas");
+const appVeiculos = require("../apps/veiculos/controller/ctlVeiculos");
+const appMotoristas = require("../apps/motoristas/controller/ctlMotoristas");
+const appMotoristasVeiculos = require("../apps/motoristasVeiculos/controller/ctlMotoristasVeiculos");
+
 
 routerApp.use((req, res, next) => {
   next();
@@ -21,6 +24,15 @@ routerApp.get("/", (req, res) => {
 routerApp.post("/login", appLogin.Login);
 routerApp.post("/logout", appLogin.Logout);
 routerApp.get("/api/auth/me", Me, appLogin.Me);
+
+
+/// Rotas de Motoristas
+routerApp.get("/motoristas", Me, appMotoristas.GetAllMotoristas);
+routerApp.get("/motoristas/:id", Me, appMotoristas.GetMotoristaByID);
+routerApp.post("/motoristas", Me, appMotoristas.InsertMotorista);
+routerApp.put("/motoristas/:id", Me, appMotoristas.UpdateMotorista);
+routerApp.delete("/motoristas/:id", Me, appMotoristas.DeleteMotorista);
+
 
 // Rotas de Veiculos
 routerApp.get("/veiculos", Me, appVeiculos.GetAllVeiculos);
@@ -49,5 +61,11 @@ routerApp.get("/usuarios/:id", Me, appUsuarios.GetUsuarioByID);
 routerApp.post("/usuarios", Me, appUsuarios.InsertUsuario);
 routerApp.put("/usuarios/:id", Me, appUsuarios.UpdateUsuario);
 routerApp.delete("/usuarios/:id", Me, appUsuarios.DeleteUsuario);
+
+// Rotas para MotoristasVeiculos
+routerApp.get("/motoristas-veiculos", Me, appMotoristasVeiculos.GetAllMotoristasVeiculos);
+routerApp.get("/motoristas-veiculos/:id", Me, appMotoristasVeiculos.GetMotoristaVeiculoByID);
+routerApp.post("/motoristas-veiculos", Me, appMotoristasVeiculos.InsertMotoristaVeiculo);
+routerApp.put("/motoristas-veiculos/:id", Me, appMotoristasVeiculos.UpdateMotoristaVeiculo);
 
 module.exports = routerApp;

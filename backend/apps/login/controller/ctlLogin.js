@@ -81,7 +81,8 @@ const Me = (req, res) => {
 
   if (!req.user) {
     return res.status(401).json({ message: "Usuário não autenticado." });
-
+  }
+  
   try {
     const token = req.cookies.auth_token;
 
@@ -105,8 +106,7 @@ const Me = (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({ message: "Erro interno do servidor" });
-  }}
-
+  }
   res.json({ user: req.user });
 };
 

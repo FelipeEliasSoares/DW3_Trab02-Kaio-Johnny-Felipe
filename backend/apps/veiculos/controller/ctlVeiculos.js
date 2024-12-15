@@ -3,12 +3,12 @@ const mdlVeiculos = require("../model/mdlVeiculos");
 // Função para obter todas as contas
 const GetAllVeiculos = async (req, res) => {
   try {
-    const registros = await mdlVeiculos.GetAllVeiculos();
-    res.json({ status: "ok", registros });
+    const veiculos = await mdlVeiculos.GetAllVeiculos();
+    res.json({ status: "ok", veiculos });
   } catch (error) {
     res.status(500).json({
       status: "erro",
-      mensagem: "Erro ao obter todos os veiculos",
+      mensagem: "erro ao obter todos os veiculos",
       erro: error.message,
     });
   }
@@ -18,9 +18,9 @@ const GetAllVeiculos = async (req, res) => {
 const GetVeiculosByID = async (req, res) => {
   try {
     const veiculoId = req.params.id;
-    const registro = await mdlVeiculos.GetVeiculosByID(veiculoId);
-    if (registro.length > 0) {
-      res.json({ status: "ok", registro });
+    const veiculos = await mdlVeiculos.GetVeiculosByID(veiculoId);
+    if (veiculos.length > 0) {
+      res.json({ status: "ok", veiculos });
     } else {
       res.status(404).json({
         status: "erro",
@@ -39,8 +39,8 @@ const GetVeiculosByID = async (req, res) => {
 // Função para inserir uma nova conta
 const InsertVeiculo = async (req, res) => {
   try {
-    const registro = req.body;
-    const { msg, linhasAfetadas } = await mdlVeiculos.InsertVeiculo(registro);
+    const veiculos = req.body;
+    const { msg, linhasAfetadas } = await mdlVeiculos.InsertVeiculo(veiculos);
     res.json({ status: msg, linhasAfetadas });
   } catch (error) {
     res.status(500).json({
@@ -56,10 +56,11 @@ const UpdateVeiculo= async (req, res) => {
   try {
     // Captura o ID da URL e os dados do corpo
     const id = req.params.id;
-    const registro = req.body;
-    registro.id = id;
+    const veiculos = req.body;
+    veiculos.id = id;
+    console.log(id);
     // Chama o modelo para atualizar o usuário
-    const { msg, linhasAfetadas } = await mdlVeiculos.UpdateVeiculo(registro);
+    const { msg, linhasAfetadas } = await mdlVeiculos.UpdateVeiculo(veiculos);
     if (linhasAfetadas > 0) {
       res.status(200).json({
         status: msg,
