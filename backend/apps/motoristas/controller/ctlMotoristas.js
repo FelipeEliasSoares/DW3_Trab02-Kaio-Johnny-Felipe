@@ -70,14 +70,14 @@ const DeleteMotorista = async (req, res) => {
       return res.status(400).json({ status: "erro", mensagem: "ID do Motorista é obrigatório" });
     }
 
-    // Chama a função do modelo para deletar o usuário
-    const { linhasAfetadas } = await mdlMotorista.DeleteMotorista({ id });
+    // Chama a função do modelo para deletar o motorista
+    const { msg ,linhasAfetadas } = await mdlMotorista.DeleteMotorista({ id });
 
-    // Verifica se o usuário foi encontrado e removido
+    // Verifica se o motorista foi encontrado e removido
     if (linhasAfetadas > 0) {
-      res.status(200).json({ status: "ok", mensagem: "Motorista removido com sucesso" });
+      res.status(200).json({ status: "ok", msg: msg });
     } else {
-      res.status(404).json({ status: "erro", mensagem: "Motorista não encontrado" });
+      res.status(404).json({ status: "erro", msg: msg });
     }
   } catch (error) {
     // Lida com erros e retorna resposta de erro

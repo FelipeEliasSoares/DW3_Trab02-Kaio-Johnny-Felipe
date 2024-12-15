@@ -16,6 +16,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle, Search, Eye, Edit, Trash, Plus } from "lucide-react";
 import { Motorista } from "../../../hooks/motoristas/types/types";
 import { Input } from "@/components/ui/input";
+import { formatCPF } from "@/lib/utils/formatCpf"; // Importa a função para formatar CPF
 
 interface MotoristaTableProps {
   motoristas: Motorista[];
@@ -97,10 +98,10 @@ export const MotoristaTable: FC<MotoristaTableProps> = ({
                     <TableCell className="font-medium">
                       {registro.nome}
                     </TableCell>
-                    <TableCell>{registro.cpf}</TableCell>
+                    <TableCell>{formatCPF(registro.cpf)}</TableCell> {/* Formata o CPF */}
                     <TableCell>{registro.email}</TableCell>
                     <TableCell>
-                      {new Date(registro.dataContratacao).toLocaleDateString(
+                      {new Date(registro.datacontratacao).toLocaleDateString(
                         "pt-BR"
                       )}
                     </TableCell>
@@ -108,14 +109,14 @@ export const MotoristaTable: FC<MotoristaTableProps> = ({
                       <div className="flex justify-end gap-2">
                         <Button variant="ghost" size="sm" asChild>
                           <Link
-                            href={`/dashboard/motorista/${registro.id}/view`}
+                            href={`/dashboard/motoristas/${registro.id}/view`}
                           >
                             <Eye className="w-4 h-4" />
                           </Link>
                         </Button>
                         <Button variant="ghost" size="sm" asChild>
                           <Link
-                            href={`/dashboard/motorista/${registro.id}/edit`}
+                            href={`/dashboard/motoristas/${registro.id}/edit`}
                           >
                             <Edit className="w-4 h-4" />
                           </Link>

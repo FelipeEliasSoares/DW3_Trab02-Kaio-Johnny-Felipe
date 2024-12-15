@@ -5,6 +5,7 @@ const appLogin = require("../apps/login/controller/ctlLogin");
 
 const Me = require("../apps/middleware/auth");
 const appClientes = require("../apps/clientes/controller/ctlClientes");
+const appEntregas = require("../apps/entregas/controller/ctlEntregas");
 const appVeiculos = require("../apps/veiculos/controller/ctlVeiculos");
 const appMotoristas = require("../apps/motoristas/controller/ctlMotoristas");
 const appMotoristasVeiculos = require("../apps/motoristasVeiculos/controller/ctlMotoristasVeiculos");
@@ -47,11 +48,18 @@ routerApp.post("/clientes", Me, appClientes.InsertCliente);
 routerApp.put("/clientes/:id", Me, appClientes.UpdateCliente);
 routerApp.delete("/clientes/:id", Me, appClientes.DeleteCliente);
 
+// Rotas Entregas
+routerApp.get("/entregas", Me, appEntregas.GetAllEntregas);
+routerApp.get("/entregas/:id", Me, appEntregas.GetEntregaByID);
+routerApp.post("/entregas", Me, appEntregas.InsertEntrega);
+routerApp.put("/entregas/:id", Me, appEntregas.UpdateEntrega);
+routerApp.delete("/entregas/:id", Me, appEntregas.DeleteEntrega);
+
+
 // Rotas para MotoristasVeiculos
 routerApp.get("/motoristas-veiculos", Me, appMotoristasVeiculos.GetAllMotoristasVeiculos);
 routerApp.get("/motoristas-veiculos/:id", Me, appMotoristasVeiculos.GetMotoristaVeiculoByID);
 routerApp.post("/motoristas-veiculos", Me, appMotoristasVeiculos.InsertMotoristaVeiculo);
 routerApp.put("/motoristas-veiculos/:id", Me, appMotoristasVeiculos.UpdateMotoristaVeiculo);
-routerApp.delete("/motoristas-veiculos/:id", Me, appMotoristasVeiculos.DeleteMotoristaVeiculo);
 
 module.exports = routerApp;

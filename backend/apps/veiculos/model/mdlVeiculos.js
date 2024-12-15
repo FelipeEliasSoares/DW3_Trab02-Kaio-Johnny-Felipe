@@ -4,7 +4,7 @@ const db = require("../../../database/databaseconfig");
 const GetAllVeiculos= async () => {
   return (
     await db.query(
-      "SELECT * " + "FROM veiculos where removido IS NOT TRUE ORDER BY id ASC"
+      "SELECT * " + "FROM veiculos where softDelete IS NOT TRUE ORDER BY id ASC"
     )
   ).rows;
 };
@@ -74,9 +74,9 @@ const DeleteVeiculo = async (registroPar) => {
   let msg = "ok";
 
   try {
-    // Atualiza o campo `removido` para TRUE
+    // Atualiza o campo `softDelete` para TRUE
     linhasAfetadas = (
-      await db.query("UPDATE veiculos SET removido = TRUE WHERE id = $1", [
+      await db.query("UPDATE veiculos SET softDelete = TRUE WHERE id = $1", [
         registroPar.id,
       ])
     ).rowCount;
